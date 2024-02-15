@@ -1,4 +1,4 @@
-export default App;
+
 
 import {View, StyleSheet, Text, TouchableOpacity} from "react-native";
 import { useState, useEffect }  from "react";
@@ -17,27 +17,31 @@ const App = () => {
   const [userChoice, setUserChoice] = useState(null);
   const [compChoice, setCompChoice] = useState(null);
   const [result, setResult] = useState('');
+  const [updateGame, setUpdateGame] = useState(false);
 
   const userSelection = (choice) => {
     setUserChoice(choice);
+    setUpdateGame(!updateGame);
   };
  
-    useEffect(() => {
-      const randomChoice = choiceRandomizer();
-      setCompChoice(randomChoice);
+  useEffect(() => {
+    const randomChoice = choiceRandomizer();
+    setCompChoice(randomChoice);
 
-  if (userChoice === randomChoice) {
-    setResult('Det blir oavgjort');
-  } else if (
-    (userChoice === 'Sten' && randomChoice === 'Påse') ||
-    (userChoice === 'Sax' && randomChoice === 'Sten')  ||
-    (userChoice === 'Påse' && randomChoice === 'Sax')  
-    ) {
-      setResult('Du förlorar!');
-    } else {
-      setResult('DU VANN!');
+    if (userChoice && compChoice) {
+      if (userChoice === compChoice) {
+        setResult('Det blir oavgjort');
+      } else if (
+        (userChoice === 'Sten' && compChoice === 'Påse') ||
+        (userChoice === 'Sax' && compChoice === 'Sten') ||
+        (userChoice === 'Påse' && compChoice === 'Sax')
+      ) {
+        setResult('Du förlorar!');
+      } else {
+        setResult('DU VANN!');
+      }
     }
-  }, [userChoice]);
+  }, [userChoice, compChoice, updateGame]);
     
   return (
     <View style={styles.container}>
@@ -106,3 +110,5 @@ const styles = StyleSheet.create({
     marginTop: 'auto'
   },
 });
+
+export default App;
