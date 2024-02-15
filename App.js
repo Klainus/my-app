@@ -7,7 +7,7 @@ import { useState, useEffect }  from "react";
 const choicesAvailable = ['Sten', 'Sax', 'Påse'];
 
 const choiceRandomizer = () => {
-  const randomChoice = Math.floor(Math.random() * choicesAvailable.length);
+  const randomChoice = Math.floor(Math.random() * choicesAvailable.length); //randomized choice for computer
   return choicesAvailable[randomChoice];
 };
 
@@ -17,7 +17,7 @@ const App = () => {
   const [userChoice, setUserChoice] = useState(null);
   const [compChoice, setCompChoice] = useState(null);
   const [result, setResult] = useState('');
-  const [updateGame, setUpdateGame] = useState(false);
+  const [updateGame, setUpdateGame] = useState(false); //updategame ensures the user can make the same choice again
 
   const userSelection = (choice) => {
     setUserChoice(choice);
@@ -34,13 +34,13 @@ const App = () => {
       } else if (
         (userChoice === 'Sten' && compChoice === 'Påse') ||
         (userChoice === 'Sax' && compChoice === 'Sten') ||
-        (userChoice === 'Påse' && compChoice === 'Sax')
+        (userChoice === 'Påse' && compChoice === 'Sax') //set winner conditions
       ) {
         setResult('Du förlorar!');
       } else {
         setResult('DU VANN!');
       }
-    }
+    }  
   }, [userChoice, compChoice, updateGame]);
     
   return (
